@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="index.css">
+    </head>
+    <body>
+        <form action="/rank" methode="GET">
+        <fieldset>
+            <legend><h3>Choisissez vos caractéristiques de classement:</h3></legend>
+            <div>
+                <input type="checkbox" name="choice" value="NombreInterventions">
+                <label for="NombreInterventions">Nombre d'interventions</label>
+            </div>
+
+            <div>
+                <input type="checkbox" name="choice" value="MoyennePrix">
+                <label for="MoyennePrix">Moyenne de prix</label>
+            </div>
+
+            <div>
+                <input type="checkbox" name="choice" value="NombrePhotosBA">
+                <label for="NombrePhotosBA">Photos avant et prés des differents interventions</label>
+            </div>
+
+            <div>
+                <input type="checkbox" name="choice" value="NombreMedecins">
+                <label for="NombreMedecins">Nombre de Medecins d'equipe</label>
+            </div>
+
+            <div>
+                <input type="checkbox" name="choice" value="MoyenneAnneesExperience">
+                <label for="MoyenneAnneesExperience">Moyenne d'annees d'experience d'equipe</label>
+            </div>
+
+            <div>
+                <input type="checkbox" name="choice" value="Temoignage">
+                <label for="Temoignage">Temoignage des patients</label>
+            </div>
+
+            <div>
+                <button type="submit">Rank</button>
+            </div>
+        </fieldset>
+        </form>
+        <div id="result">
+            <embed type='image/svg+xml' src={{graph_data|safe}} style='max-width:1000px'/>
+        </div>
+    </body>
+</html>

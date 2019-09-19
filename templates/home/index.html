@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>iRanking</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
+  <link href="{{ url_for('static', filename='fonts/font.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='css/sb-admin-2.min.css')}}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="{{ url_for('static', filename='css/sb-admin-2.min.css')}}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <div class="sidebar-brand-icon rotate-n-15">
+          <i class="fas fa-laugh-wink"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">iRanking <sup>2</sup></div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Dashboard -->
+      <li class="nav-item active">
+        <a class="nav-link" href="#">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dashboard</span></a>
+      </li>
+
+
+    </ul>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+          <!-- Sidebar Toggle (Topbar) -->
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+
+          <!-- Topbar Search -->
+          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="button">
+                  <i class="fas fa-search fa-sm"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <!-- Topbar Navbar -->
+          <ul class="navbar-nav ml-auto">
+
+
+
+            <!-- Nav Item - User Information -->
+            <li class="nav-item dropdown no-arrow">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">User</span>
+                <img class="img-profile rounded-circle" src="{{ url_for('static', filename='img/user.jpeg')}}">
+              </a>
+
+            </li>
+
+          </ul>
+
+        </nav>
+        <!-- End of Topbar -->
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+          </div>
+
+          <!-- Content Row -->
+          <div class="row">
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-primary  mb-1">Database Length:</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">{{db_length}}</div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+              <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                  <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                      <div class="text-xs font-weight-bold text-success  mb-1">Number of Features:</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">7</div>
+                    </div>
+                    <div class="col-auto">
+                      <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Content Row -->
+
+
+
+          <!-- Content Row -->
+          <div class="row">
+            <div class="col-lg-12 mb-12">
+
+            <div class="card shadow mb-4">
+                <!-- Card Header - Accordion -->
+                <a href="#collapseCardExample" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                  <h6 class="m-0 font-weight-bold text-primary">Features Selection</h6>
+                </a>
+                <!-- Card Content - Collapse -->
+                <div class="collapse show" id="collapseCardExample" style="">
+                  <div class="card-body">
+                    <form action="/rank" methode="GET">
+                      <legend><h3>Choose your ranking Features:</h3></legend>
+
+
+                      {% for i in range(2,features_length-1,2) %}
+                      <div class="row">
+                        {% if ( i < features_length) %}
+                        <div class="col-lg-6 mb-6">
+                          <fieldset>
+                            <div>
+                                <input type="checkbox" name="choice" value="{{features[i]}}">
+                                <label for="{{features[i]}}">{{features[i]}}</label>
+                            </div>
+                          </fieldset>
+                        </div>
+                        {% endif %}
+                        {% if ( i+1 < features_length) %}
+                        <div class="col-lg-6 mb-6">
+                          <fieldset>
+                            <div>
+                                <input type="checkbox" name="choice" value="{{features[i+1]}}">
+                                <label for="{{features[i+1]}}">{{features[i+1]}}</label>
+                            </div>
+                          </fieldset>
+                        </div>
+                        {% endif %}
+                      </div>
+                      {%endfor%}
+                      <button type="submit" class="btn btn-primary" > submit</button>
+
+
+                    </form>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Collapsable Chart -->
+            <div class="col-lg-12 mb-12">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Accordion -->
+                <a href="#collapseCardExample3" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                  <h6 class="m-0 font-weight-bold text-primary">Best choices</h6>
+                </a>
+                <!-- Card Content - Collapse -->
+                <div class="collapse show" id="collapseCardExample3">
+                  <div class="card-body">
+                    {% set L=["bg-success","bg-info","bg-warning","bg-danger"] %}
+                    {%for index,row in list.iterrows() %}
+                        {% if index<4 %}
+                    <h4 class="small font-weight-bold"><a href="{{row['url']}}">{{row["Agency_Name"]}}</a> <span class="float-right">{{row['Scores']}}%</span></h4>
+                          <div class="progress mb-4">
+                            <div class="progress-bar {{L[index]}}" role="progressbar" style="width: {{row['Scores']}}%" aria-valuenow="{{row['Scores']}}" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                        {%endif%}
+                    {%endfor%}
+                </div>
+                </div>
+              </div>
+            </div>
+
+
+
+            <!-- //table -->
+            <div class="container-fluid">
+              <!-- DataTales Example -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">List of Beauty Centers :</h6>
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                      <div class="row">
+                        <div class="col-sm-12">
+                          <table class="table table-bordered dataTable" id="dataTable" width="90%" cellspacing="1" role="grid" aria-describedby="dataTable_info" style="width: 98%;">
+                            <thead>
+                            <tr role="row">
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" aria-sort="ascending"  style="width: 60%;">Name</th>
+                              <th class="sorting_asc" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1" style="width: 20%;">Score</th>
+                              <th class="sorting" tabindex="0" aria-controls="dataTable" rowspan="1" colspan="1"  style="width: 20%;">Link</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                              <th rowspan="1" colspan="1">Name</th>
+                              <th rowspan="1" colspan="1">Score</th>
+                              <th rowspan="1" colspan="1">Link</th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            {%for index,row in list.iterrows() %}
+                            {% if (index%2)== 0 %}
+                            <tr role="row" class="odd">
+                              {%else%}
+                            <tr role="row" class="even">
+                              {%endif%}
+
+                              <td class="sorting_1">{{row["Agency_Name"]}}</td>
+                              <td>{{row["Scores"]}}</td>
+                              <td>
+                                <a href="{{row['url']}}" class="btn btn-primary active" role="button" aria-pressed="true">Visit website</a>
+                              </td>
+
+                            </tr>
+                            {%endfor%}
+                            </tbody>
+                          </table></div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--End Table -->
+
+          </div>
+
+        <!-- /.container-fluid -->
+
+
+          <!-- Content Column -->
+
+
+            {% if graph_data != null %}
+            <div class="col-lg-12 mb-12">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Accordion -->
+                <a href="#collapseCardExample2" class="d-block card-header py-3" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="collapseCardExample">
+                  <h6 class="m-0 font-weight-bold text-primary">Graph chart</h6>
+                </a>
+
+                <!-- Card Content - Collapse -->
+                <div class="collapse show" id="collapseCardExample2" style="">
+                  <div class="card-body">
+                      <embed type='image/svg+xml' src={{graph_data|safe}} style='max-width:1000px'/>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {%endif%}
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; Your Website 2019</span>
+          </div>
+        </div>
+      </footer>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          <a class="btn btn-primary" href="login.html">Logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js')}}"></script>
+  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="{{ url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js')}}"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="{{ url_for('static', filename='js/sb-admin-2.min.js')}}"></script>
+
+  <!-- Page level plugins -->
+  <script src="{{ url_for('static', filename='vendor/chart.js/Chart.min.js')}}"></script>
+  <script src="{{ url_for('static', filename='vendor/datatables/jquery.dataTables.min.js')}}"></script>
+  <script src="{{ url_for('static', filename='vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
+  <script src="{{ url_for('static', filename='js/demo/datatables-demo.js')}}"></script>
+
+
+  <!-- Page level custom scripts -->
+  <script src="{{ url_for('static', filename='js/demo/chart-area-demo.js')}}"></script>
+  <script src="{{ url_for('static', filename='js/demo/chart-pie-demo.js')}}"></script>
+    <script>
+      {% if is_empty %}
+        alert('your List of features is empty');
+      {% endif %}
+    </script>
+
+</body>
+
+</html>

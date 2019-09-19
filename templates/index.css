@@ -1,0 +1,19 @@
+html {
+  font-family: sans-serif;
+}
+
+form {
+  width: 650px;
+  margin-left: 0%;
+}
+
+div {
+  margin-bottom: 20px;
+}
+
+fieldset {
+  border: 5px solid blue;
+}
+
+legend {
+  color: blue;
